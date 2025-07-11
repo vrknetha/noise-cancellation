@@ -36,7 +36,7 @@ def load_audio(filename="WhatsApp Audio 2025-07-11 at 12.30.43 PM.wav"):
         sr = 16000
     
     # Convert to int16
-    audio = (audio * 32768).clip(-32768, 32767).astype(np.int16)
+    audio = np.clip(audio * 32768, -32768, 32767).astype(np.int16)
     
     print(f"Audio: {len(audio)/sr:.1f}s at {sr}Hz")
     return audio, sr
@@ -153,7 +153,7 @@ def apply_preset(reducer, preset):
     reducer.freq_mask_smooth_hz = settings['freq_mask_smooth_hz']
     
     # Update pedalboard based on preset
-    from pedalboard import Pedalboard, NoiseGate, Compressor, Gain, LowShelfFilter, HighpassFilter, LowpassFilter, PeakFilter, Limiter
+    from pedalboard import Pedalboard, NoiseGate, Compressor, HighpassFilter, LowpassFilter, PeakFilter, Limiter
     
     board_effects = [
         # Stage 1: Remove handling noise
